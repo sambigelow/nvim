@@ -3,8 +3,34 @@ if not status_ok then
     return
 end
 
-configs.setup {
-    ensure_installed = "maintained",
+configs.setup({
+    ensure_installed = {
+        "astro",
+        "bash",
+        "c",
+        "cmake",
+        "css",
+        "cpp",
+        "go",
+        "haskell",
+        "html",
+        "javascript",
+        "json",
+        "json5",
+        "lua",
+        "make",
+        "ocaml",
+        "python",
+        "ruby",
+        "rust",
+        "scss",
+        "sql",
+        "svelte",
+        "swift",
+        "tsx",
+        "typescript",
+        "vue"
+    },
     sync_install = false,
     ignore_install = { "" },
     highlight = {
@@ -21,5 +47,13 @@ configs.setup {
         -- colors = {},
         -- termcolors = {},
     }
-}
+})
+
+vim.api.nvim_create_autocmd({'BufEnter','BufAdd','BufNew','BufNewFile','BufWinEnter'}, {
+  group = vim.api.nvim_create_augroup('TS_FOLD_WORKAROUND', {}),
+  callback = function()
+    vim.opt.foldmethod     = 'expr'
+    vim.opt.foldexpr       = 'nvim_treesitter#foldexpr()'
+  end
+})
 
