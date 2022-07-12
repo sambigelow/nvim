@@ -47,7 +47,9 @@ packer.startup(function(use)
     use "nvim-lua/plenary.nvim" -- Useful lua functions used by other plugins
 
     use "tpope/vim-surround"
-    use "tpope/vim-commentary"
+    use "numToStr/Comment.nvim"
+
+    use "windwp/nvim-autopairs"
 
     -- cmp plugins
     use "hrsh7th/nvim-cmp" -- The main completion plugin
@@ -76,6 +78,7 @@ packer.startup(function(use)
     }
     use "p00f/nvim-ts-rainbow"
     use "nvim-treesitter/playground"
+    use "JoosepAlviste/nvim-ts-context-commentstring"
 
     -- theme packages
     use "lunarvim/colorschemes"
