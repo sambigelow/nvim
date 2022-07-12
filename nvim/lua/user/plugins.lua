@@ -69,10 +69,20 @@ packer.startup(function(use)
     -- Telescope
     use "nvim-telescope/telescope.nvim"
 
+    -- Treesitter
+    use {
+        "nvim-treesitter/nvim-treesitter",
+        run = ":TSUpdate",
+    }
+    use "p00f/nvim-ts-rainbow"
+    use "nvim-treesitter/playground"
+
     -- theme packages
     use "lunarvim/colorschemes"
     use "projekt0n/github-nvim-theme"
     use "folke/tokyonight.nvim"
+    use "mhartington/oceanic-next"
+
 
     if PACKER_BOOTSTRAP then
         require("packer").sync()
