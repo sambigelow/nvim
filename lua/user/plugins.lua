@@ -1,94 +1,110 @@
 local fn = vim.fn
 
 -- Automatically install packer
-local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 
 if fn.empty(fn.glob(install_path)) > 0 then
-    PACKER_BOOTSTRAP = fn.system {
-        "git",
-        "clone",
-        "--depth",
-        "1",
-        "https://github.com/wbthomason/packer.nvim",
-        install_path,
-    }
+	PACKER_BOOTSTRAP = fn.system({
+		"git",
+		"clone",
+		"--depth",
+		"1",
+		"https://github.com/wbthomason/packer.nvim",
+		install_path,
+	})
 
-    print "Installing packer - close and reopen Neovim..."
-    vim.cmd [[ packadd packer.nvim ]]
+	print("Installing packer - close and reopen Neovim...")
+	vim.cmd([[ packadd packer.nvim ]])
 end
 
 -- Autocmmand that reloads neovim whenever saving this file
-vim.cmd [[
+vim.cmd([[
     augroup packer_user_config
         autocmd!
         autocmd BufWritePost plugins.lua source <afile> | PackerSync
     augroup end
-]]
+]])
 
 -- Use a "protected call" so we don't error on the furst use
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
-    return
+	return
 end
 
 -- Have packer use a popup window
-packer.init {
-    display = {
-        open_fn = function()
-            return require("packer.util").float { border = "rounded" }
-        end,
-    },
-}
+packer.init({
+	display = {
+		open_fn = function()
+			return require("packer.util").float({ border = "rounded" })
+		end,
+	},
+})
 
 -- Actually do plugin installation here
 packer.startup(function(use)
-    use "wbthomason/packer.nvim" -- have packer manage itself
-    use "nvim-lua/popup.nvim" -- An implementation of the popup API from vim in Neovim
-    use "nvim-lua/plenary.nvim" -- Useful lua functions used by other plugins
+	use("wbthomason/packer.nvim") -- have packer manage itself
+	use("nvim-lua/popup.nvim") -- An implementation of the popup API from vim in Neovim
+	use("nvim-lua/plenary.nvim") -- Useful lua functions used by other plugins
 
-    use "tpope/vim-surround"
-    use "numToStr/Comment.nvim"
+	-- Nvim File Tree
+	use("kyazdani42/nvim-web-devicons")
+	use("kyazdani42/nvim-tree.lua")
 
-    use "windwp/nvim-autopairs"
+	use("tpope/vim-surround")
+	use({
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup()
+		end,
+	})
 
-    -- cmp plugins
-    use "hrsh7th/nvim-cmp" -- The main completion plugin
-    use "hrsh7th/cmp-buffer" -- buffer completions
-    use "hrsh7th/cmp-path" -- path completions
-    use "hrsh7th/cmp-cmdline" -- cmdline completions
-    use "saadparwaiz1/cmp_luasnip" --snippet completions
-    use "hrsh7th/cmp-nvim-lsp" -- use lsp for completion
-    use "hrsh7th/cmp-nvim-lua" -- use lsp for completion
+	use("windwp/nvim-autopairs")
 
-    -- snippets
-    use "L3MON4D3/LuaSnip" --snippet engine
-    use "rafamadriz/friendly-snippets" -- a bunch of other snippets
+	-- cmp plugins
+	use("hrsh7th/nvim-cmp") -- The main completion plugin
+	use("hrsh7th/cmp-buffer") -- buffer completions
+	use("hrsh7th/cmp-path") -- path completions
+	use("hrsh7th/cmp-cmdline") -- cmdline completions
+	use("saadparwaiz1/cmp_luasnip") --snippet completions
+	use("hrsh7th/cmp-nvim-lsp") -- use lsp for completion
+	use("hrsh7th/cmp-nvim-lua") -- use lsp for completion
+	use("akinsho/bufferline.nvim")
+	use("moll/vim-bbye")
 
-    -- LSP packages
-    use "neovim/nvim-lspconfig"
-    use "williamboman/nvim-lsp-installer"
+	-- snippets
+	use("L3MON4D3/LuaSnip") --snippet engine
+	use("rafamadriz/friendly-snippets") -- a bunch of other snippets
 
-    -- Telescope
-    use "nvim-telescope/telescope.nvim"
+	-- LSP packages
+	use("neovim/nvim-lspconfig")
+	use("williamboman/nvim-lsp-installer")
+	use("jose-elias-alvarez/null-ls.nvim")
 
-    -- Treesitter
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
-    }
-    use "p00f/nvim-ts-rainbow"
-    use "nvim-treesitter/playground"
-    use "JoosepAlviste/nvim-ts-context-commentstring"
+	-- Telescope
+	use("nvim-telescope/telescope.nvim")
 
-    -- theme packages
-    use "lunarvim/colorschemes"
-    use "projekt0n/github-nvim-theme"
-    use "folke/tokyonight.nvim"
-    use "mhartington/oceanic-next"
+	-- Treesitter
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		run = function()
+			require("nvim-treesitter.install").update({ with_sync = true })
+		end,
+	})
+	use("p00f/nvim-ts-rainbow")
+	use("nvim-treesitter/playground")
+	use("JoosepAlviste/nvim-ts-context-commentstring")
 
+	-- theme packages
+	use("lunarvim/colorschemes")
+	use("projekt0n/github-nvim-theme")
+	use("folke/tokyonight.nvim")
+	use("mhartington/oceanic-next")
 
-    if PACKER_BOOTSTRAP then
-        require("packer").sync()
-    end
+	-- Git
+	use("lewis6991/gitsigns.nvim")
+
+	if PACKER_BOOTSTRAP then
+		require("packer").sync()
+	end
 end)
 

@@ -25,8 +25,8 @@ keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
-keymap("n", "<leader>e", ":Lex 30<cr>", opts)
-keymap("n", "-", ":Explore<cr>", opts)
+keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
+keymap("n", "-", ":NvimTreeFocus<CR>", opts)
 
 -- Resize with arrows
 keymap("n", "<C-S-k>", ":resize +2<CR>", opts)
@@ -37,10 +37,14 @@ keymap("n", "<C-S-l>", ":vertical resize +2<CR>", opts)
 -- Navigate buffers
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
+keymap("n", "<leader>w", ":Bdelete<CR>", opts)
 
 -- Telescope
 keymap("n", "<leader><leader>", "<cmd>Telescope find_files<CR>", opts)
 keymap("n", "<leader>f", "<cmd>Telescope live_grep<CR>", opts) -- pnemonic: find "grep"
+
+-- Null LS
+keymap("n", "<leader>l", ":Format<CR>", opts)
 
 -- Visual --
 -- Stay in indent mode
@@ -65,4 +69,3 @@ keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
-
